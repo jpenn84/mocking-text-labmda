@@ -14,6 +14,9 @@ Input: ` Money can't buy happiness.`
 
 Output: `MoNeY cAn'T bUy HaPpInEsS.`
 
+## Limitations
+
+The current limitations on what characters' case can be changed is limited by the Unicode Standard, as described in section 3.13 "Default Case Folding." (https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf#page=86)
 
 ## API vs Client-Side function
 
