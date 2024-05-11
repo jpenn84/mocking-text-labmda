@@ -1,7 +1,10 @@
 def convert_text(input_text, start_upper_case = None):
     if start_upper_case == None:
         start_upper_case = True
-    
+
+    #remove leading and trailing whitespace chars
+    input_text = input_text.strip();
+
     outputText = ""
     for index in range(len(input_text)):
 
