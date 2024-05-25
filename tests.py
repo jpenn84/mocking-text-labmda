@@ -6,6 +6,7 @@ expected_output_start_upper_case = "MoNeY CaN'T BuY HaPpInEsS."
 expected_output_start_lower_case = "mOnEy cAn't bUy hApPiNeSs."
 error_message = "Conversion error:"
 
+
 class TestCalculations(unittest.TestCase):
     def test_default(self):
         output_text = convert_text(input_text)
@@ -35,6 +36,7 @@ class TestCalculations(unittest.TestCase):
     def test_string_trim_tab(self):
         output_text = convert_text("\t" + input_text + "\t", True)
         self.assertEqual(output_text, expected_output_start_upper_case)
+
 
 if __name__ == '__main__':
     unittest.main()
