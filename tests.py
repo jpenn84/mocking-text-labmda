@@ -1,5 +1,5 @@
 import unittest
-from convert_text import convert_text, lambda_handler
+from convert_text import convert_text, lambda_handler, JSON_KEY_INPUT_TEXT, JSON_KEY_START_UPPER_CASE
 
 input_text = "Money can't buy happiness."
 expected_output_start_upper_case = "MoNeY CaN'T BuY HaPpInEsS."
@@ -41,8 +41,8 @@ class TestCalculations(unittest.TestCase):
 
     def test_lambda_handler(self):
         event = {
-            "inputText": input_text,
-            "startUpperCase": True
+            JSON_KEY_INPUT_TEXT: input_text,
+            JSON_KEY_START_UPPER_CASE: True
         }
         self.assertEqual(expected_output_lambda, lambda_handler(event, None), lambda_error_message)
 

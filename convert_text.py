@@ -1,8 +1,12 @@
 import json
 
+JSON_KEY_INPUT_TEXT = "inputText"
+JSON_KEY_START_UPPER_CASE = "startUpperCase"
+JSON_KEY_CONVERTED_TEXT = "convertedText"
+
 
 def lambda_handler(event, context):
-    json_output = {"convertedText": convert_text(event["inputText"], event["startUpperCase"])}
+    json_output = {JSON_KEY_CONVERTED_TEXT: convert_text(event[JSON_KEY_INPUT_TEXT], event[JSON_KEY_START_UPPER_CASE])}
     return json.dumps(json_output)
 
 
