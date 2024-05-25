@@ -1,3 +1,11 @@
+import json
+
+
+def lambda_handler(event, context):
+    # TODO: #6 Setup lambda / expand this stub
+    json_output = {"convertedText": convert_text(None)}
+    return json.dumps(json_output)
+
 def convert_text(input_text, start_upper_case = None):
     if start_upper_case == None:
         start_upper_case = True
