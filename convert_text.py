@@ -2,8 +2,7 @@ import json
 
 
 def lambda_handler(event, context):
-    # TODO: #6 Setup lambda / expand this stub
-    json_output = {"convertedText": convert_text(None)}
+    json_output = {"convertedText": convert_text(event["inputText"], event["startUpperCase"])}
     return json.dumps(json_output)
 
 
