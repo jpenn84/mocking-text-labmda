@@ -10,7 +10,7 @@ CONVERSION_ERROR_MESSAGE = "Conversion error:"
 LAMBDA_ERROR_MESSAGE = "Lambda error:"
 
 
-class TestCalculations(unittest.TestCase):
+class TestConversion(unittest.TestCase):
     def test_default(self):
         output_text = convert_text(INPUT_TEXT)
         self.assertEqual(EXPECTED_OUTPUT_START_UPPER_CASE, output_text), CONVERSION_ERROR_MESSAGE
