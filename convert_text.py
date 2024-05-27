@@ -7,7 +7,10 @@ JSON_KEY_CONVERTED_TEXT = "convertedText"
 
 def lambda_handler(event, context):
     json_output = {JSON_KEY_CONVERTED_TEXT: convert_text(event[JSON_KEY_INPUT_TEXT], event[JSON_KEY_START_UPPER_CASE])}
-    return json.dumps(json_output)
+    return {
+        "status code": 200,
+        "body": json.dumps(json_output)
+    }
 
 
 def convert_text(input_text, start_upper_case=None):
