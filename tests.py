@@ -4,7 +4,7 @@ from convert_text import convert_text, lambda_handler, JSON_KEY_INPUT_TEXT, JSON
 INPUT_TEXT = "Money can't buy happiness."
 EXPECTED_OUTPUT_START_UPPER_CASE = "MoNeY CaN'T BuY HaPpInEsS."
 EXPECTED_OUTPUT_START_LOWER_CASE = "mOnEy cAn't bUy hApPiNeSs."
-EXPECTED_OUTPUT_LAMBDA = "{\"convertedText\": \"" + EXPECTED_OUTPUT_START_UPPER_CASE + "\"}"
+EXPECTED_OUTPUT_LAMBDA_200 = {'body': '{"convertedText": "MoNeY CaN\'T BuY HaPpInEsS."}', 'status code': 200}
 CONVERSION_ERROR_MESSAGE = "Conversion error:"
 LAMBDA_ERROR_MESSAGE = "Lambda error:"
 
@@ -39,12 +39,12 @@ class TestCalculations(unittest.TestCase):
         output_text = convert_text("\t" + INPUT_TEXT + "\t", True)
         self.assertEqual(EXPECTED_OUTPUT_START_UPPER_CASE, output_text, CONVERSION_ERROR_MESSAGE)
 
-    def test_lambda_handler(self):
+    def test_lambda_handler_200(self):
         event = {
             JSON_KEY_INPUT_TEXT: INPUT_TEXT,
             JSON_KEY_START_UPPER_CASE: True
         }
-        self.assertEqual(EXPECTED_OUTPUT_LAMBDA, lambda_handler(event, None), LAMBDA_ERROR_MESSAGE)
+        self.assertEqual(EXPECTED_OUTPUT_LAMBDA_200, lambda_handler(event, None), LAMBDA_ERROR_MESSAGE)
 
 
 if __name__ == '__main__':
