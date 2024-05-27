@@ -1,15 +1,16 @@
+import json
 import unittest
 from convert_text import convert_text, lambda_handler, JSON_KEY_INPUT_TEXT, JSON_KEY_START_UPPER_CASE
 
 INPUT_TEXT = "Money can't buy happiness."
 EXPECTED_OUTPUT_START_UPPER_CASE = "MoNeY CaN'T BuY HaPpInEsS."
 EXPECTED_OUTPUT_START_LOWER_CASE = "mOnEy cAn't bUy hApPiNeSs."
-EXPECTED_OUTPUT_LAMBDA_200 = {'body': '{"convertedText": "MoNeY CaN\'T BuY HaPpInEsS."}', 'status code': 200}
+EXPECTED_OUTPUT_LAMBDA_200 = "{\"convertedText\": \"MoNeY CaN'T BuY HaPpInEsS.\"}"
 CONVERSION_ERROR_MESSAGE = "Conversion error:"
 LAMBDA_ERROR_MESSAGE = "Lambda error:"
 
 
-class TestCalculations(unittest.TestCase):
+class TestConversion(unittest.TestCase):
     def test_default(self):
         output_text = convert_text(INPUT_TEXT)
         self.assertEqual(EXPECTED_OUTPUT_START_UPPER_CASE, output_text), CONVERSION_ERROR_MESSAGE
@@ -40,11 +41,14 @@ class TestCalculations(unittest.TestCase):
         self.assertEqual(EXPECTED_OUTPUT_START_UPPER_CASE, output_text, CONVERSION_ERROR_MESSAGE)
 
     def test_lambda_handler_200(self):
-        event = {
+        body = {
             JSON_KEY_INPUT_TEXT: INPUT_TEXT,
             JSON_KEY_START_UPPER_CASE: True
         }
-        self.assertEqual(EXPECTED_OUTPUT_LAMBDA_200, lambda_handler(event, None), LAMBDA_ERROR_MESSAGE)
+        event = {"body": json.dumps(body)}
+        resp = lambda_handler(event, None)
+        self.assertEqual(EXPECTED_OUTPUT_LAMBDA_200, resp['body'], LAMBDA_ERROR_MESSAGE)
+        self.assertEqual(200, resp['statusCode'], LAMBDA_ERROR_MESSAGE)
 
 
 if __name__ == '__main__':
