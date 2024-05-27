@@ -20,7 +20,7 @@ def convert_text(input_text, start_upper_case=None):
     # remove leading and trailing whitespace chars
     input_text = input_text.strip()
 
-    output_text = ""
+    output_text = str()
     for index in range(len(input_text)):
 
         # If either: (character index is even and start upper case) or (character is odd and start lower case)
