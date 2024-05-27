@@ -6,9 +6,15 @@ JSON_KEY_CONVERTED_TEXT = "convertedText"
 
 
 def lambda_handler(event, context):
-    json_output = {JSON_KEY_CONVERTED_TEXT: convert_text(event[JSON_KEY_INPUT_TEXT], event[JSON_KEY_START_UPPER_CASE])}
+    body = json.loads(event['body'])
+    json_output = {JSON_KEY_CONVERTED_TEXT: convert_text(body[JSON_KEY_INPUT_TEXT], body[JSON_KEY_START_UPPER_CASE])}
     return {
-        "status code": 200,
+        "statusCode": 200,
+        "isBase64Encoded": False,
+        "headers": {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": '*'
+        },
         "body": json.dumps(json_output)
     }
 
