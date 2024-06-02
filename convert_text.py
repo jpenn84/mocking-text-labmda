@@ -1,21 +1,31 @@
 import json
-
-JSON_KEY_INPUT_TEXT = "inputText"
-JSON_KEY_START_UPPER_CASE = "startUpperCase"
-JSON_KEY_CONVERTED_TEXT = "convertedText"
+import os
+from global_constants import *
 
 
 def lambda_handler(event, context):
-    body = json.loads(event['body'])
+    if os.environ.get(ACAO_ENV_VAR) is None:
+        print(ACAO_ENV_VAR_NOT_SET_ERROR_MESSAGE)
+        return {
+            STATUS_CODE_KEY: 500,
+            IS_BASE64_ENCODED_KEY: False,
+            HEADERS_KEY: {
+                CONTENT_TYPE_HEADER_KEY: CONTENT_TYPE_APPLICATION_JSON,
+                ACAO_HEADER_KEY: "*"
+            },
+            BODY_KEY: ACAO_ENV_VAR_NOT_SET_ERROR_MESSAGE
+        }
+
+    body = json.loads(event[BODY_KEY])
     json_output = {JSON_KEY_CONVERTED_TEXT: convert_text(body[JSON_KEY_INPUT_TEXT], body[JSON_KEY_START_UPPER_CASE])}
     return {
-        "statusCode": 200,
-        "isBase64Encoded": False,
-        "headers": {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": '*'
+        STATUS_CODE_KEY: 200,
+        IS_BASE64_ENCODED_KEY: False,
+        HEADERS_KEY: {
+            CONTENT_TYPE_HEADER_KEY: CONTENT_TYPE_APPLICATION_JSON,
+            ACAO_HEADER_KEY: os.environ.get(ACAO_ENV_VAR)
         },
-        "body": json.dumps(json_output)
+        BODY_KEY: json.dumps(json_output)
     }
 
 

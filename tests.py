@@ -1,6 +1,8 @@
 import json
+import os
 import unittest
-from convert_text import convert_text, lambda_handler, JSON_KEY_INPUT_TEXT, JSON_KEY_START_UPPER_CASE
+from global_constants import *
+from convert_text import lambda_handler, convert_text
 
 INPUT_TEXT = "Money can't buy happiness."
 EXPECTED_OUTPUT_START_UPPER_CASE = "MoNeY cAn't BuY hApPiNeSs."
@@ -8,6 +10,14 @@ EXPECTED_OUTPUT_START_LOWER_CASE = "mOnEy CaN'T bUy HaPpInEsS."
 EXPECTED_OUTPUT_LAMBDA_200 = "{\"convertedText\": \"MoNeY cAn't BuY hApPiNeSs.\"}"
 CONVERSION_ERROR_MESSAGE = "Conversion error:"
 LAMBDA_ERROR_MESSAGE = "Lambda error:"
+
+
+def unset_acao_header():
+    del os.environ[ACAO_ENV_VAR]
+
+
+def set_acao_header():
+    os.environ[ACAO_ENV_VAR] = "*"
 
 
 class TestConversion(unittest.TestCase):
@@ -41,14 +51,26 @@ class TestConversion(unittest.TestCase):
         self.assertEqual(EXPECTED_OUTPUT_START_UPPER_CASE, output_text, CONVERSION_ERROR_MESSAGE)
 
     def test_lambda_handler_200(self):
+        set_acao_header()
         body = {
             JSON_KEY_INPUT_TEXT: INPUT_TEXT,
             JSON_KEY_START_UPPER_CASE: True
         }
-        event = {"body": json.dumps(body)}
+        event = {BODY_KEY: json.dumps(body)}
         resp = lambda_handler(event, None)
-        self.assertEqual(EXPECTED_OUTPUT_LAMBDA_200, resp['body'], LAMBDA_ERROR_MESSAGE)
-        self.assertEqual(200, resp['statusCode'], LAMBDA_ERROR_MESSAGE)
+        self.assertEqual(EXPECTED_OUTPUT_LAMBDA_200, resp[BODY_KEY], LAMBDA_ERROR_MESSAGE)
+        self.assertEqual(200, resp[STATUS_CODE_KEY], LAMBDA_ERROR_MESSAGE)
+
+    def test_missing_acao_header(self):
+        unset_acao_header()
+        body = {
+            JSON_KEY_INPUT_TEXT: INPUT_TEXT,
+            JSON_KEY_START_UPPER_CASE: True
+        }
+        event = {BODY_KEY: json.dumps(body)}
+        resp = lambda_handler(event, None)
+        self.assertEqual(ACAO_ENV_VAR_NOT_SET_ERROR_MESSAGE, resp[BODY_KEY], LAMBDA_ERROR_MESSAGE)
+        self.assertEqual(500, resp[STATUS_CODE_KEY], LAMBDA_ERROR_MESSAGE)
 
 
 if __name__ == '__main__':
