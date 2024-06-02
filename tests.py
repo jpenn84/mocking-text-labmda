@@ -2,7 +2,8 @@ import json
 import os
 import unittest
 from global_constants import *
-from convert_text import lambda_handler, convert_text
+from convert_text import convert_text
+from lambda_function import lambda_handler
 
 INPUT_TEXT = "Money can't buy happiness."
 EXPECTED_OUTPUT_START_UPPER_CASE = "MoNeY cAn't BuY hApPiNeSs."
