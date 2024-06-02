@@ -3,9 +3,9 @@ import unittest
 from convert_text import convert_text, lambda_handler, JSON_KEY_INPUT_TEXT, JSON_KEY_START_UPPER_CASE
 
 INPUT_TEXT = "Money can't buy happiness."
-EXPECTED_OUTPUT_START_UPPER_CASE = "MoNeY CaN'T BuY HaPpInEsS."
-EXPECTED_OUTPUT_START_LOWER_CASE = "mOnEy cAn't bUy hApPiNeSs."
-EXPECTED_OUTPUT_LAMBDA_200 = "{\"convertedText\": \"MoNeY CaN'T BuY HaPpInEsS.\"}"
+EXPECTED_OUTPUT_START_UPPER_CASE = "MoNeY cAn't BuY hApPiNeSs."
+EXPECTED_OUTPUT_START_LOWER_CASE = "mOnEy CaN'T bUy HaPpInEsS."
+EXPECTED_OUTPUT_LAMBDA_200 = "{\"convertedText\": \"MoNeY cAn't BuY hApPiNeSs.\"}"
 CONVERSION_ERROR_MESSAGE = "Conversion error:"
 LAMBDA_ERROR_MESSAGE = "Lambda error:"
 
