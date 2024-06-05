@@ -8,7 +8,8 @@ from lambda_function import lambda_handler
 INPUT_TEXT = "Money can't buy happiness."
 EXPECTED_OUTPUT_START_UPPER_CASE = "MoNeY cAn't BuY hApPiNeSs."
 EXPECTED_OUTPUT_START_LOWER_CASE = "mOnEy CaN'T bUy HaPpInEsS."
-EXPECTED_OUTPUT_LAMBDA_200 = "{\"convertedText\": \"MoNeY cAn't BuY hApPiNeSs.\"}"
+EXPECTED_OUTPUT_LAMBDA_200 = ("{\"outputUpperCase\": \"MoNeY cAn't BuY hApPiNeSs.\", \"outputLowerCase\": \"mOnEy "
+                              "CaN'T bUy HaPpInEsS.\"}")
 CONVERSION_ERROR_MESSAGE = "Conversion error:"
 LAMBDA_ERROR_MESSAGE = "Lambda error:"
 
@@ -53,10 +54,7 @@ class TestConversion(unittest.TestCase):
 
     def test_lambda_handler_200(self):
         set_acao_header()
-        body = {
-            JSON_KEY_INPUT_TEXT: INPUT_TEXT,
-            JSON_KEY_START_UPPER_CASE: True
-        }
+        body = {JSON_KEY_INPUT_TEXT: INPUT_TEXT}
         event = {BODY_KEY: json.dumps(body)}
         resp = lambda_handler(event, None)
         self.assertEqual(EXPECTED_OUTPUT_LAMBDA_200, resp[BODY_KEY], LAMBDA_ERROR_MESSAGE)
@@ -64,10 +62,7 @@ class TestConversion(unittest.TestCase):
 
     def test_missing_acao_header(self):
         unset_acao_header()
-        body = {
-            JSON_KEY_INPUT_TEXT: INPUT_TEXT,
-            JSON_KEY_START_UPPER_CASE: True
-        }
+        body = {JSON_KEY_INPUT_TEXT: INPUT_TEXT}
         event = {BODY_KEY: json.dumps(body)}
         resp = lambda_handler(event, None)
         self.assertEqual(ACAO_ENV_VAR_NOT_SET_ERROR_MESSAGE, resp[BODY_KEY], LAMBDA_ERROR_MESSAGE)

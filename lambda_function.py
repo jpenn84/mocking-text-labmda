@@ -18,7 +18,12 @@ def lambda_handler(event, context):
         }
 
     body = json.loads(event[BODY_KEY])
-    json_output = {JSON_KEY_CONVERTED_TEXT: convert_text(body[JSON_KEY_INPUT_TEXT], body[JSON_KEY_START_UPPER_CASE])}
+
+    json_output = {
+       JSON_KEY_OUTPUT_UPPERCASE: convert_text(body[JSON_KEY_INPUT_TEXT], True),
+       JSON_KEY_OUTPUT_LOWERCASE: convert_text(body[JSON_KEY_INPUT_TEXT], False)
+    }
+
     return {
         STATUS_CODE_KEY: 200,
         IS_BASE64_ENCODED_KEY: False,
