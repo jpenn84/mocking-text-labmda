@@ -1,6 +1,7 @@
 # request payload keys
 JSON_KEY_INPUT_TEXT = "inputText"
-JSON_KEY_START_UPPER_CASE = "startUpperCase"
+JSON_KEY_OUTPUT_UPPERCASE = "outputUpperCase"
+JSON_KEY_OUTPUT_LOWERCASE = "outputLowerCase"
 
 # response payload keys
 STATUS_CODE_KEY = "statusCode"
@@ -10,7 +11,6 @@ CONTENT_TYPE_HEADER_KEY = "Content-Type"
 CONTENT_TYPE_APPLICATION_JSON = "application/json"
 ACAO_HEADER_KEY = "Access-Control-Allow-Origin"
 BODY_KEY = "body"
-JSON_KEY_CONVERTED_TEXT = "convertedText"
 
 # ACAO env var
 ACAO_ENV_VAR = "MOCKING_TEXT_LAMBDA_ACAO"
