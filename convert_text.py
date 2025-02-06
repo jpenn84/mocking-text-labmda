@@ -12,8 +12,8 @@ def convert_text(input_text, start_upper_case=None):
     next_char_upper = start_upper_case
 
     for index in range(len(input_text)):
-        # add whitespace to constructed string without toggling the expected case
-        if input_text[index].isspace():
+        # do not change non-alpha characters
+        if not input_text[index].isalpha():
             output_text = output_text + input_text[index]
             continue
 

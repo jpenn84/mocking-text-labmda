@@ -6,10 +6,11 @@ from convert_text import convert_text
 from lambda_function import lambda_handler
 
 INPUT_TEXT = "Money can't buy happiness."
-EXPECTED_OUTPUT_START_UPPER_CASE = "MoNeY cAn't BuY hApPiNeSs."
-EXPECTED_OUTPUT_START_LOWER_CASE = "mOnEy CaN'T bUy HaPpInEsS."
-EXPECTED_OUTPUT_LAMBDA_200 = ("{\"outputUpperCase\": \"MoNeY cAn't BuY hApPiNeSs.\", \"outputLowerCase\": \"mOnEy "
-                              "CaN'T bUy HaPpInEsS.\"}")
+EXPECTED_OUTPUT_START_UPPER_CASE = "MoNeY cAn'T bUy HaPpInEsS."
+EXPECTED_OUTPUT_START_LOWER_CASE = "mOnEy CaN't BuY hApPiNeSs."
+EXPECTED_OUTPUT_LAMBDA_200 = (
+    "{\"outputUpperCase\": \"" + EXPECTED_OUTPUT_START_UPPER_CASE + "\", \"outputLowerCase\": \"" + EXPECTED_OUTPUT_START_LOWER_CASE + "\"}"
+    )
 CONVERSION_ERROR_MESSAGE = "Conversion error:"
 LAMBDA_ERROR_MESSAGE = "Lambda error:"
 
@@ -51,6 +52,10 @@ class TestConversion(unittest.TestCase):
     def test_string_trim_tab(self):
         output_text = convert_text("\t" + INPUT_TEXT + "\t", True)
         self.assertEqual(EXPECTED_OUTPUT_START_UPPER_CASE, output_text, CONVERSION_ERROR_MESSAGE)
+
+    def test_string_with_non_alpha(self):
+        output_text = convert_text("Hello! Goodbye!", True)
+        self.assertEqual("HeLlO! gOoDbYe!", output_text, CONVERSION_ERROR_MESSAGE)
 
     def test_lambda_handler_200(self):
         set_acao_header()
